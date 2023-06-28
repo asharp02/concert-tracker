@@ -1,0 +1,4 @@
+venv/
+.vscode
+concertFinder/db.sqlite3
+concertFinder/concerts/settings.py
