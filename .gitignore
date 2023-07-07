@@ -2,3 +2,4 @@ venv/
 .vscode
 concertFinder/db.sqlite3
 concertFinder/concerts/settings.py
+concertFinder/concertFinder/.DS_Store
