@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Where's the Show?</title>
+    <script type="text/javascript" src="{% static 'concertFinder/index.js' %}" defer></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  </head>
+<body>
+      <div class="form">
+        <label for="artist_name">Enter the Artist's Name: </label>
+        <input type="text" name="artist_name" id="artist-name" required>
+      </div>
+      <div class="form">
+        <input id='submit-btn' type="submit" value="Let's Go!">
+      </div>
+
+      <div id='map' style='width: 800px; height: 600px;'></div>
+</body>
+</html>
