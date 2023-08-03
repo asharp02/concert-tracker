@@ -34,16 +34,29 @@ function drawMap(position){
 }
 
 function populateMap(shows){
-    currentEventMarkers.forEach((marker) => {
-        marker.remove();
-    })
-    console.log(shows)
+    // Remove previously placed markers
+    for (const marker of currentEventMarkers) {
+        marker.remove()
+    }
+    
     shows.forEach((show) => {
-        console.log(show.venue.latitude)
-        console.log(show.venue.longitude)
-        const marker1 = new mapboxgl.Marker()
-        .setLngLat([show.venue.longitude, show.venue.latitude])
-        .addTo(map);
+        // create the popup
+        let popupHTML = `<h3 class="headliner">${show.headliner}</h3>`
+        if (show.openers != ""){
+            popupHTML += `<h4 class="openers">${show.openers}</h4>`
+        }
+        popupHTML += `<h4 class="startTime">${show.startsat}</h4>`
+        popupHTML += `<h4 class="venueName">${show.venue.name}</h4>`
+
+        const popup = new mapboxgl.Popup({
+            offset: 25,
+        }).setHTML(popupHTML)
+        const el = document.createElement('div');
+        el.className = 'marker';
+        const marker1 = new mapboxgl.Marker(el)
+            .setLngLat([show.venue.longitude, show.venue.latitude])
+            .setPopup(popup)
+            .addTo(map);
         currentEventMarkers.push(marker1);
     })
 }
