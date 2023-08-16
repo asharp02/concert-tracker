@@ -41,12 +41,16 @@ function populateMap(shows){
     
     shows.forEach((show) => {
         // create the popup
-        let popupHTML = `<h3 class="headliner">${show.headliner}</h3>`
+        let popupHTML = `<h2 class="headliner">${show.headliner}</h3>`
         if (show.openers != ""){
             popupHTML += `<h4 class="openers">${show.openers}</h4>`
         }
-        popupHTML += `<h4 class="startTime">${show.startsat}</h4>`
-        popupHTML += `<h4 class="venueName">${show.venue.name}</h4>`
+        popupHTML += `<div class="showDetails">`
+        popupHTML += `<span class="startTime">${show.startsat}</span><br />`
+        popupHTML += `<span class="venueName">${show.venue.name}</span><br />`
+        popupHTML += `<span class="venueLocation">${show.venue.location}</span>`
+        popupHTML += `</div>`
+
 
         const popup = new mapboxgl.Popup({
             offset: 25,

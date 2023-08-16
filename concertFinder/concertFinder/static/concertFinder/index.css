@@ -15,4 +15,9 @@
 .headliner{
     text-align: center;
     font-family: 'urbanist';
+    margin-top: 5px;
+}
+
+.showDetails {
+    text-align: center;
 }
