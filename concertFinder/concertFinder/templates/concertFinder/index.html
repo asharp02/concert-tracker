@@ -9,14 +9,22 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
   </head>
 <body>
-      <div class="form">
-        <label for="artist_name">Enter the Artist's Name: </label>
-        <input type="text" name="artist_name" id="artist-name" required>
-      </div>
-      <div class="form">
-        <input id='submit-btn' type="submit" value="Let's Go!">
-      </div>
+  <header>
+    Where's the show?
+  </header>
+  <div class="container">
+        <div class="leftContainer">
+          <form>
+            <div class="input-container">
+              <input type="text" name="artist_name" id="artist-input" placeholder= "Enter the Artist's Name!" required>
+            </div>
+            <input id='submit-btn' type="submit" value="Let's Go!">
+          </form>
+          <ol type="1">
 
+          </ol>
+      </div>
       <div id='map' style='width: 800px; height: 600px;'></div>
+    </div>
 </body>
 </html>

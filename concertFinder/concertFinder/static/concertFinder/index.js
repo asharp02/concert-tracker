@@ -1,6 +1,7 @@
 let currentEventMarkers = []
 async function handleSubmit(event){
-    const artistName = document.querySelector("#artist-name").value
+    const artistName = document.querySelector("#artist-input").value
+    event.preventDefault();
     const myRequest = new Request(`/api/events?artist_name=${artistName}`);
     const response = await fetch(myRequest);
     const events = await response.json();
