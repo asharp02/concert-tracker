@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Urbanist:ital,wght@0,400;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Comic+Neue:wght@700&family=Urbanist:ital,wght@0,400;1,100&display=swap');
+
 .marker {
     background-image: url("/static/concertfinder/concert.png");
     background-size: cover;
@@ -33,6 +34,7 @@
     flex-direction: row;
     justify-content: center;
     margin-top: 2rem;
+    gap: 12px;
 }
 
 header {
@@ -48,10 +50,42 @@ body {
 .leftContainer {
     background: #fe4eda;
     width: 15rem;
-    display: flex;
+}
+
+.input-container {
+    padding: 10px;
 }
 
 #artist-input {
     padding: 10px;
+    font-family: 'Comic Neue';
+    font-size: 16px;
+    border-radius: 2px;
+    border: 2px solid aquamarine;
 }
 
+form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#submit-btn {
+    background-color: white;
+    border: 2px solid aquamarine;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 3px;
+    font-family: 'Comic Neue';
+    transition: all 1.0s ease;
+}
+
+#submit-btn:hover {
+    background-color: aquamarine;
+    transition: 1.0s;
+}
