@@ -49,7 +49,7 @@ body {
 
 .leftContainer {
     background: #fe4eda;
-    width: 15rem;
+    width: 18rem;
 }
 
 .input-container {
@@ -59,7 +59,7 @@ body {
 #artist-input {
     padding: 10px;
     font-family: 'Comic Neue';
-    font-size: 16px;
+    font-size: 20px;
     border-radius: 2px;
     border: 2px solid aquamarine;
 }

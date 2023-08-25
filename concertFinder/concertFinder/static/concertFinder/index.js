@@ -1,4 +1,9 @@
+const mapboxAccessToken = 'pk.eyJ1IjoiYXNoYXJwMDIiLCJhIjoiY2p5b3EwMTJyMTdoajNtbG1jZTJsaHJvYSJ9.KacigdAtzleu4QeM-dx7XQ'
+let userLatitude =  null;
+let userLongitude = null;
+
 let currentEventMarkers = []
+let userLocation = null;
 async function handleSubmit(event){
     const artistName = document.querySelector("#artist-input").value
     event.preventDefault();
@@ -6,10 +11,12 @@ async function handleSubmit(event){
     const response = await fetch(myRequest);
     const events = await response.json();
     populateMap(events);
+    populateListView(events);
 }
 
 const successCallback = (position) => {
-    userLocation = position;
+    userLatitude = position.coords.latitude;
+    userLongitude = position.coords.longitude;
     drawMap(position)
 };
 const errorCallback = (error) => {
@@ -20,17 +27,16 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 let submitBtn = document.querySelector("#submit-btn");
 submitBtn.addEventListener("click", handleSubmit);
 
-function drawMap(position){
-    console.log(position.coords.latitude);
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYXNoYXJwMDIiLCJhIjoiY2p5b3EwMTJyMTdoajNtbG1jZTJsaHJvYSJ9.KacigdAtzleu4QeM-dx7XQ';
+function drawMap(){
+    mapboxgl.accessToken = mapboxAccessToken;
     map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: [position.coords.longitude, position.coords.latitude], // starting position [lng, lat]
+    center: [userLongitude, userLatitude], // starting position [lng, lat]
     zoom: 9, // starting zoom
     });
     let locationMarker = new mapboxgl.Marker({ "color": "#50C878" })
-        .setLngLat([position.coords.longitude, position.coords.latitude])
+        .setLngLat([userLongitude, userLatitude])
         .addTo(map)
 }
 
@@ -65,6 +71,23 @@ function populateMap(shows){
         currentEventMarkers.push(marker1);
     })
 }
+
+async function populateListView(events){
+    if (userLongitude == null || userLatitude == null){
+        console.log("Please allow location on browser")
+        return
+    }
+
+    await Promise.all(events.map(async (event) => {
+        let mapboxMatrixURL = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${userLongitude},${userLatitude};`
+        mapboxMatrixURL += `${event.venue.longitude},${event.venue.latitude}?access_token=${mapboxAccessToken}`
+        const response = await fetch(mapboxMatrixURL, {mode: 'cors'})
+        const distances = await response.json()
+        console.log(distances)
+      }));
+
+}
+  
 
 
 /*
