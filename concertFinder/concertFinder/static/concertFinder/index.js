@@ -8,11 +8,19 @@ let userLocation = null;
 async function handleSubmit(event) {
   const artistName = document.querySelector("#artist-input").value;
   event.preventDefault();
+  clearList();
   const myRequest = new Request(`/api/events?artist_name=${artistName}`);
   const response = await fetch(myRequest);
   const events = await response.json();
   populateMap(events);
   handleListView(events);
+}
+
+function clearList() {
+  const list = document.querySelector(".concert-list");
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
 }
 
 const successCallback = (position) => {
@@ -49,7 +57,7 @@ function populateMap(shows) {
   currId = 0;
   shows.forEach((show) => {
     // create the popup
-    let popupHTML = `<h2 class="headliner">${show.headliner}</h3>`;
+    let popupHTML = `<h2 class="headliner popup-headliner">${show.headliner}</h3>`;
     if (show.openers != "") {
       popupHTML += `<h4 class="openers">${show.openers}</h4>`;
     }
@@ -118,11 +126,11 @@ function populateList(events) {
   for (const event of events) {
     const listItemHTML = `<li id='item-${event.id}' data-id='${event.id}' data-lat='${event.venue.latitude}' data-lng='${event.venue.longitude}'> 
             <div class='date-list-view'>
-                <p>${event.startsat.month} ${event.startsat.date}</p>
+                <p class="list-month-date">${event.startsat.month} ${event.startsat.date}</p>
                 <p>${event.startsat.day} ${event.startsat.time} </p>
             </div>
             <div class="venue-list-view">
-                <p> ${event.headliner} </p>
+                <p class="headliner list-headliner"> ${event.headliner} </p>
                 <p> ${event.venue.name} ${event.venue.location} - Travel Time: ${event.venue.distance}</p>
             </div>
         `;
@@ -138,15 +146,26 @@ async function handleListView(events) {
   await getDistanceData(events);
   populateList(events);
   console.log(events);
-  setHoverEventsForListItems();
+  setHoverAndClickEventsForListItems();
 }
 
-function setHoverEventsForListItems() {
+function setHoverAndClickEventsForListItems() {
   document.querySelectorAll(".concert-list li").forEach((listItem) => {
     listItem.addEventListener("mouseover", highlightMarker);
     listItem.addEventListener("mouseout", unHighlightMarker);
+    listItem.addEventListener("click", zoomToMarker);
   });
 }
+
+function zoomToMarker(event) {
+  const lat = event.currentTarget.dataset.lat;
+  const lng = event.currentTarget.dataset.lng;
+  map.flyTo({
+    center: [lng, lat],
+    zoom: 9,
+  });
+}
+
 function highlightMarker(event) {
   const showId = event.currentTarget.dataset.id;
   const showMarker = document.querySelector(`#marker-${showId}`);
@@ -157,7 +176,8 @@ function highlightMarker(event) {
   // center map to currently highlighter marker
   map.flyTo({
     center: [lng, lat],
-    speed: 0.2,
+    speed: 0.5,
+    zoom: 3,
   });
 }
 
@@ -176,6 +196,8 @@ function unHighlightMarker(event) {
 5. Add hover effect + interactivity on list items
 6. Style list!
 7. Handle non-driveable venues
+8. Have multiple list view options: sort by travel time or sort by date!
+9. Make list view scrollable within container!
 
 
 */

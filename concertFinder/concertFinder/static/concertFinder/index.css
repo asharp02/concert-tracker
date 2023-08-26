@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Comic+Neue:wght@700&family=Urbanist:ital,wght@0,400;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Comic+Neue:wght@700&family=Permanent+Marker&family=Urbanist:ital,wght@0,400;1,100&display=swap');
 
 .marker {
     background-image: url("/static/concertfinder/concert.png");
@@ -20,9 +20,17 @@
 }
 
 .headliner{
-    text-align: center;
-    font-family: 'urbanist';
+    font-family: 'Permanent Marker';
     margin-top: 5px;
+}
+
+.popup-headliner {
+    text-align: center;
+}
+
+.list-headliner {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .showDetails {
@@ -57,12 +65,13 @@ body {
 }
 
 p {
-    font-family: 'Comic Neue'
+    font-family: 'Helvetica Neue';
+    font-size: 15px;
 }
 
 #artist-input {
     padding: 10px;
-    font-family: 'Comic Neue';
+    font-family: 'Helvetica Neue';
     font-size: 20px;
     border-radius: 2px;
     border: 2px solid aquamarine;
@@ -98,4 +107,12 @@ form{
     display: flex;
     flex-direction: row;
     gap: 30px;
+}
+
+.date-list-view {
+    min-width: 20%;
+}
+
+.list-month-date {
+    font-weight: bold;
 }
