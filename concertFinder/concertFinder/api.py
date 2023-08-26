@@ -26,7 +26,12 @@ def events(request, artist_name):
         show["venue"] = event["venue"]
         show["headliner"] = event["lineup"][0] if len(event["lineup"]) > 0 else ""
         show["openers"] = ", ".join(event["lineup"][1:])
-        show["startsat"] = event_datetime.strftime("%a %B %-d, %-I:%M %p")
+        show["startsat"] = {}
+        show["startsat"]["detailed"] = event_datetime.strftime("%a %B %-d, %-I:%M %p")
+        show["startsat"]["day"] = event_datetime.strftime("%a")
+        show["startsat"]["month"] = event_datetime.strftime("%b")
+        show["startsat"]["date"] = event_datetime.strftime("%-d")
+        show["startsat"]["time"] = event_datetime.strftime("%-I:%M %p")
         events.append(show)
 
     return events

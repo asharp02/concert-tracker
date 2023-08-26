@@ -53,7 +53,7 @@ function populateMap(shows){
             popupHTML += `<h4 class="openers">${show.openers}</h4>`
         }
         popupHTML += `<div class="showDetails">`
-        popupHTML += `<span class="startTime">${show.startsat}</span><br />`
+        popupHTML += `<span class="startTime">${show.startsat.detailed}</span><br />`
         popupHTML += `<span class="venueName">${show.venue.name}</span><br />`
         popupHTML += `<span class="venueLocation">${show.venue.location}</span>`
         popupHTML += `</div>`
@@ -113,11 +113,17 @@ async function getDistanceData(events){
 function populateList(events){
     const listElement = document.querySelector(".concert-list");
     for (const event of events) {
-        const listItem = document.createElement("li");
-        listItem.setAttribute('id', `item-${event.id}`);
-        listItem.dataset.id = event.id;
-        listItem.appendChild(document.createTextNode(`${event.venue.location}`));
-        listElement.appendChild(listItem);
+        const listItemHTML = `<li id='item-${event.id}'> 
+            <div class='date-list-view'>
+                <p>${event.startsat.month} ${event.startsat.date}</p>
+                <p>${event.startsat.day} ${event.startsat.time} </p>
+            </div>
+            <div class="venue-list-view">
+                <p> ${event.headliner} </p>
+                <p> ${event.venue.name} ${event.venue.location} - Travel Time: ${event.venue.distance}</p>
+            </div>
+        `
+        listElement.insertAdjacentHTML('beforeend', listItemHTML)
     }
 }
 
@@ -128,6 +134,7 @@ async function handleListView(events){
     }
     await getDistanceData(events);
     populateList(events);
+    console.log(events)
 }
   
 

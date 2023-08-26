@@ -49,11 +49,15 @@ body {
 
 .leftContainer {
     background: #fe4eda;
-    width: 18rem;
+    width: 70%;
 }
 
 .input-container {
     padding: 10px;
+}
+
+p {
+    font-family: 'Comic Neue'
 }
 
 #artist-input {
@@ -88,4 +92,10 @@ form{
 #submit-btn:hover {
     background-color: aquamarine;
     transition: 1.0s;
+}
+
+.concert-list li{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }
