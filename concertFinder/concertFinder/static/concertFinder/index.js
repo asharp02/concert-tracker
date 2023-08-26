@@ -66,6 +66,7 @@ function populateMap(shows){
         const el = document.createElement('div');
         el.className = 'marker';
         el.id = `marker-${currId}`;
+        el.dataset.id = currId;
         const marker1 = new mapboxgl.Marker(el)
             .setLngLat([show.venue.longitude, show.venue.latitude])
             .setPopup(popup)
@@ -113,6 +114,8 @@ function populateList(events){
     const listElement = document.querySelector(".concert-list");
     for (const event of events) {
         const listItem = document.createElement("li");
+        listItem.setAttribute('id', `item-${event.id}`);
+        listItem.dataset.id = event.id;
         listItem.appendChild(document.createTextNode(`${event.venue.location}`));
         listElement.appendChild(listItem);
     }
