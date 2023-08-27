@@ -149,30 +149,45 @@ async function handleListView(events) {
   setHoverAndClickEventsForListItems();
 }
 
+let showDelay = 300,
+  hideDelay = 300;
+let itemHoverOverTimer, itemHoverOutTimer;
+let currentHighlightedMarker;
 function setHoverAndClickEventsForListItems() {
   document.querySelectorAll(".concert-list li").forEach((listItem) => {
-    listItem.addEventListener("mouseover", highlightMarker);
-    listItem.addEventListener("mouseout", unHighlightMarker);
-    listItem.addEventListener("click", zoomToMarker);
+    listItem.addEventListener("mouseover", handleItemHoverOver);
+    listItem.addEventListener("mouseout", () => {
+      clearTimeout(itemHoverOverTimer);
+    });
+    listItem.addEventListener("click", zoomMarker);
   });
 }
 
-function zoomToMarker(event) {
-  const lat = event.currentTarget.dataset.lat;
-  const lng = event.currentTarget.dataset.lng;
-  map.flyTo({
-    center: [lng, lat],
-    zoom: 9,
-  });
+function handleItemHoverOver(event) {
+  const listItem = event.currentTarget;
+  itemHoverOverTimer = setTimeout(centerMarker, 400, listItem);
 }
 
-function highlightMarker(event) {
-  const showId = event.currentTarget.dataset.id;
+function handleItemHoverOut(event) {
+  clearTimeout(itemHoverOverTimer);
+  itemHoverOutTimer = setTimeout(unHighlightMarker, 0, event);
+}
+
+function highlightMarker(listItem) {
+  const showId = listItem.dataset.id;
   const showMarker = document.querySelector(`#marker-${showId}`);
   showMarker.style.width = "40px";
   showMarker.style.height = "40px";
-  const lat = event.currentTarget.dataset.lat;
-  const lng = event.currentTarget.dataset.lng;
+}
+
+function centerMarker(event) {
+  if (currentHighlightedMarker) {
+    handleItemHoverOut(currentHighlightedMarker);
+  }
+  currentHighlightedMarker = event;
+  highlightMarker(event);
+  const lat = event.dataset.lat;
+  const lng = event.dataset.lng;
   // center map to currently highlighter marker
   map.flyTo({
     center: [lng, lat],
@@ -181,8 +196,24 @@ function highlightMarker(event) {
   });
 }
 
-function unHighlightMarker(event) {
-  const showId = event.currentTarget.dataset.id;
+function zoomMarker(event) {
+  const targetedListItem = event.currentTarget;
+  if (currentHighlightedMarker != targetedListItem) {
+    handleItemHoverOut(currentHighlightedMarker);
+  }
+  clearTimeout(itemHoverOverTimer);
+  currentHighlightedMarker = targetedListItem;
+  highlightMarker(targetedListItem);
+  const lat = targetedListItem.dataset.lat;
+  const lng = targetedListItem.dataset.lng;
+  map.flyTo({
+    center: [lng, lat],
+    zoom: 9,
+  });
+}
+
+function unHighlightMarker(listItem) {
+  const showId = listItem.dataset.id;
   const showMarker = document.querySelector(`#marker-${showId}`);
   showMarker.style.width = "20px";
   showMarker.style.height = "20px";
@@ -198,6 +229,7 @@ function unHighlightMarker(event) {
 7. Handle non-driveable venues
 8. Have multiple list view options: sort by travel time or sort by date!
 9. Make list view scrollable within container!
+10. Add loading bar
 
 
 */

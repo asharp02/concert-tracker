@@ -58,6 +58,8 @@ body {
 .leftContainer {
     background: #fe4eda;
     width: 70%;
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 .input-container {
