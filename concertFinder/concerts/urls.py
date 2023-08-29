@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from concertFinder import views
-from ninja import NinjaAPI
 from concertFinder.api import api
 
 urlpatterns = [
