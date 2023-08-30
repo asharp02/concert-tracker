@@ -1,27 +1,28 @@
 # concert-tracker
+
 The ultimate live music guide! Explore an artist's tour locations on an interactive map and get live travel times to each show 🎸
 The idea for this project was sparked immediately after attending an amazing concert. I wanted to quickly see the closest shows on the same tour along
 with an estimated travel time. This project achieves exactly that: a map populated with all of an artists' upcoming shows + an ordered list of closest shows to my current
 location.
 
-
 ## Setup
+
 Run the following commands to get this project working locally:
+
 ```
-https://github.com/asharp02/concert-tracker.git
+git clone https://github.com/asharp02/concert-tracker.git
 ```
 
-Create + activate a new virtual environment:
+Build the Docker image specified within the Dockerfile:
+
 ```
-python -m venv myVenv
-source myVenv/bin/activate
+docker build -t closest_concert . --no-cache
 ```
-Install dependencies
+
+Run the container with this image (port 8000 is accessible on the host machine at port 8080):
+
 ```
-pip install -r requirements.txt
+docker run --name closest_concert -p 8080:8000 closest_concert
 ```
-Run Django development server:
-```
-python manage.py runserver
-```
-Visit http://localhost:8000 to view the app
+
+Visit http://localhost:8080 to view the app
