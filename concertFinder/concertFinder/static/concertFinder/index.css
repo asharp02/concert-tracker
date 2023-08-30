@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Comic+Neue:wght@700&family=Permanent+Marker&family=Urbanist:ital,wght@0,400;1,100&display=swap');
 
 .marker {
-    background-image: url("/static/concertfinder/concert.png");
+    background-image: url("/static/concertFinder/concert.png");
     background-size: cover;
     width: 20px;
     height: 20px;
