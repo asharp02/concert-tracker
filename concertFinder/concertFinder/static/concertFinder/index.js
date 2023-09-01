@@ -105,10 +105,12 @@ async function getDistanceData(events) {
         const distances = await response.json();
         distanceInSeconds = distances["durations"][0][1];
         event.venue.distance = distanceInSeconds;
-        lngLatDistances.set(eventLngLat, distanceInSeconds);
+        event.venue.distanceReadable = convertTravelTime(distanceInSeconds);
+        lngLatDistances.set(eventLngLat, event.venue.distance);
       }
     })
   );
+
   // sort events by distance
   events.sort((a, b) => {
     if (a.venue.distance == null) {
@@ -121,9 +123,24 @@ async function getDistanceData(events) {
   });
 }
 
+function convertTravelTime(durationInSeconds) {
+  const hours = durationInSeconds / 3600;
+  const minutes = (hours % 1) * 60;
+  let timeString = "";
+  if (hours >= 1) {
+    timeString += `${Math.round(hours)} Hours `;
+  }
+  timeString += `${Math.round(minutes)} Minutes`;
+  return timeString;
+}
+
 function populateList(events) {
   const listElement = document.querySelector(".concert-list");
   for (const event of events) {
+    const distanceNullHTML = `This event is not travellable via car from you, consider a plane ✈️`;
+    const distanceFoundHTML = `Travel Time: ${event.venue.distanceReadable}`;
+    let distanceHTML =
+      event.venue.distance == null ? distanceNullHTML : distanceFoundHTML;
     const listItemHTML = `<li id='item-${event.id}' data-id='${event.id}' data-lat='${event.venue.latitude}' data-lng='${event.venue.longitude}'> 
             <div class='date-list-view'>
                 <p class="list-month-date">${event.startsat.month} ${event.startsat.date}</p>
@@ -131,7 +148,7 @@ function populateList(events) {
             </div>
             <div class="venue-list-view">
                 <p class="headliner list-headliner"> ${event.headliner} </p>
-                <p> ${event.venue.name} ${event.venue.location} - Travel Time: ${event.venue.distance}</p>
+                <p> ${event.venue.name} ${event.venue.location}<br><strong>${distanceHTML}</strong></p>
             </div>
         `;
     listElement.insertAdjacentHTML("beforeend", listItemHTML);
@@ -230,6 +247,5 @@ function unHighlightMarker(listItem) {
 8. Have multiple list view options: sort by travel time or sort by date!
 9. Make list view scrollable within container!
 10. Add loading bar
-
-
+11. Convert travel time to hours/minutes!
 */
