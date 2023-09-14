@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <title>Where's the Show?</title>
-    <script type="text/javascript" src="{% static 'concertFinder/index.js' %}" defer></script>
+    <script type="module" src="{% static 'concertFinder/index.js' %}" defer></script>
+    <script type="module" src="{% static 'concertFinder/helpers.js' %}" defer></script>
+
     <link rel="stylesheet" href="{% static 'concertFinder/index.css' %}">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
@@ -26,5 +28,6 @@
       </div>
       <div id='map' style='width: 800px; height: 600px;'></div>
     </div>
+    <input id="MAPBOX_API_KEY" value="{{ MAPBOX_API_KEY }}" type="hidden" />
 </body>
 </html>
