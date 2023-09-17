@@ -58,7 +58,7 @@ body {
 }
 
 .leftContainer {
-    width: 40%;
+    width: 45%;
     height: 80vh;
 }
 
@@ -68,7 +68,7 @@ body {
 
 p {
     font-family: 'Helvetica Neue';
-    font-size: 15px;
+    font-size: 16px;
 }
 
 #artist-input {
@@ -118,6 +118,7 @@ form{
 .concert-list li:hover {
     box-shadow: rgba(36, 63, 97, 0.11) 0px 2px 12px, rgba(36, 63, 97, 0.12) 0px 0.5px 2px;
     cursor: grab;
+    transition: box-shadow 100ms ease-out 0s;
 }
 
 .concert-list {
@@ -129,6 +130,9 @@ form{
 
 .date-list-view {
     min-width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .list-month-date {
