@@ -144,6 +144,7 @@ async function handleListView(events) {
 
 function clearList() {
   const list = document.querySelector(".concert-list");
+  list.style.display = "none";
   while (list.firstChild) {
     list.removeChild(list.firstChild);
   }
@@ -151,6 +152,7 @@ function clearList() {
 
 function populateList(events) {
   const listElement = document.querySelector(".concert-list");
+  listElement.style.display = "block";
   for (const event of events) {
     const distanceNullHTML = `This event is not travellable via car from you, consider a plane ✈️`;
     const distanceFoundHTML = `Travel Time: ${event.venue.distanceReadable}`;

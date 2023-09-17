@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'concertFinder/index.css' %}">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <script src="https://kit.fontawesome.com/8dc5f7f539.js" crossorigin="anonymous"></script>
   </head>
 <body>
   <header>
@@ -20,13 +21,13 @@
             <div class="input-container">
               <input type="text" name="artist_name" id="artist-input" placeholder= "Enter the Artist's Name!" required>
             </div>
-            <input id='submit-btn' type="submit" value="Let's Go!">
+            <button id='submit-btn' type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </form>
           <ol class="concert-list" type="1">
 
           </ol>
       </div>
-      <div id='map' style='width: 800px; height: 600px;'></div>
+      <div id='map'></div>
     </div>
     <input id="MAPBOX_API_KEY" value="{{ MAPBOX_API_KEY }}" type="hidden" />
 </body>
