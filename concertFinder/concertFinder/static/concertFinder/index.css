@@ -18,7 +18,7 @@
     border-width: 10px;
     border-color: aquamarine;
     height: 80vh;
-    width:800px;
+    width: 800px;
 }
 
 .headliner{
@@ -58,10 +58,8 @@ body {
 }
 
 .leftContainer {
-    border: 3px solid aquamarine;
-    border-radius: 10px;
-    overflow-y: scroll;
-    width: 35%;
+    width: 40%;
+    height: 80vh;
 }
 
 .input-container {
@@ -77,8 +75,9 @@ p {
     padding: 10px;
     font-family: 'Helvetica Neue';
     font-size: 20px;
-    border-radius: 2px;
+    border-radius: 25px;
     border: 2px solid aquamarine;
+    width: 300px;
 }
 
 form{
@@ -98,7 +97,7 @@ form{
     font-size: 16px;
     cursor: pointer;
     display: inline-block;
-    border-radius: 3px;
+    border-radius: 20px;
     font-family: 'Comic Neue';
     transition: all 1.0s ease;
 }
@@ -112,7 +111,21 @@ form{
     display: flex;
     flex-direction: row;
     gap: 30px;
+    border-radius: 0.75rem;
+    padding-left: 40px;
 }
+
+.concert-list li:hover {
+    box-shadow: rgba(36, 63, 97, 0.11) 0px 2px 12px, rgba(36, 63, 97, 0.12) 0px 0.5px 2px;
+    cursor: grab;
+}
+
+.concert-list {
+    overflow-y: scroll;
+    display: none;
+    height: 88%;
+}
+
 
 .date-list-view {
     min-width: 20%;
