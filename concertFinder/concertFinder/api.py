@@ -5,8 +5,8 @@ import requests
 api = NinjaAPI()
 
 YEAR_AGO_STR = (datetime.now() - timedelta(days=365)).isoformat()
-EVENT_API_DOMAIN="https://rest.bandsintown.com/artists"
-DATE_RANGE=f"events"#?date={YEAR_AGO_STR}"
+EVENT_API_DOMAIN = "https://rest.bandsintown.com/artists"
+DATE_RANGE = f"events"  # ?date={YEAR_AGO_STR}"
 
 
 @api.get("/events")
@@ -14,10 +14,10 @@ def events(request, artist_name):
     payload = {"app_id": "483d381aff87901fe3a13652bd00a995"}
     r = requests.get(
         f"{EVENT_API_DOMAIN}/{artist_name}/{DATE_RANGE}", params=payload
-    ) # consider switching to SeatGeek for tour name data
+    )  # consider switching to SeatGeek for tour name data
     events = []
     for event in r.json():
-        show = {"past": False} # default 'past' key to False 
+        show = {"past": False}  # default 'past' key to False
         event_datetime = datetime.strptime(event["starts_at"], "%Y-%m-%dT%H:%M:%S")
         if datetime.now() > event_datetime:
             # show["past"] = True # implement feature with previous dates
@@ -32,6 +32,8 @@ def events(request, artist_name):
         show["startsat"]["month"] = event_datetime.strftime("%b")
         show["startsat"]["date"] = event_datetime.strftime("%-d")
         show["startsat"]["time"] = event_datetime.strftime("%-I:%M %p")
+        offers = event["offers"]
+        show["url"] = offers[0].get("url") if offers else ""
         events.append(show)
 
     return events
