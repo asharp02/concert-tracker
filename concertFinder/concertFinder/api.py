@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta
 from ninja import NinjaAPI
 import requests
+import environ
 
 api = NinjaAPI()
+
+env = environ.Env()
+environ.Env.read_env()
 
 YEAR_AGO_STR = (datetime.now() - timedelta(days=365)).isoformat()
 EVENT_API_DOMAIN = "https://rest.bandsintown.com/artists"
@@ -11,7 +15,7 @@ DATE_RANGE = f"events"  # ?date={YEAR_AGO_STR}"
 
 @api.get("/events")
 def events(request, artist_name):
-    payload = {"app_id": "483d381aff87901fe3a13652bd00a995"}
+    payload = {"app_id": env("APP_ID")}
     r = requests.get(
         f"{EVENT_API_DOMAIN}/{artist_name}/{DATE_RANGE}", params=payload
     )  # consider switching to SeatGeek for tour name data
