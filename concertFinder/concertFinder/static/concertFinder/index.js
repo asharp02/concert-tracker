@@ -140,6 +140,16 @@ async function handleListView(events) {
   sortConcertList(events);
   populateList(events);
   setHoverAndClickEventsForListItems();
+  handleAnchorTags();
+}
+
+function handleAnchorTags() {
+  const anchors = document.querySelectorAll(".concert-list a");
+  anchors.forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  });
 }
 
 function clearList() {
@@ -164,7 +174,7 @@ function populateList(events) {
                 <p>${event.startsat.day} ${event.startsat.time} </p>
             </div>
             <div class="venue-list-view">
-                <p class="headliner list-headliner"> ${event.headliner} </p>
+                <a class="headliner-link" href="${event.url}" target="_blank"><p class="headliner list-headliner"> ${event.headliner} </p> </a>
                 <p> ${event.venue.name} ${event.venue.location}<br><strong>${distanceHTML}</strong></p>
             </div>
         `;
