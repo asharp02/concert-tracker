@@ -31,9 +31,16 @@ async function handleSubmit(event) {
   clearMap();
   const myRequest = new Request(`/api/events?artist_name=${artistName}`);
   const response = await fetch(myRequest);
-  const events = await response.json();
-  populateMap(events);
-  handleListView(events);
+  const content = await response.json();
+  const artistNotFoundP = document.querySelector(".artist-not-found");
+
+  if (content.status === 200 && content.events.length > 0) {
+    populateMap(content.events);
+    handleListView(content.events);
+    artistNotFoundP.style.display = "none";
+  } else {
+    artistNotFoundP.style.display = "block";
+  }
 }
 
 /*

@@ -13,16 +13,18 @@
   </head>
 <body>
   <header>
-    Where's the show?
+    <h1>Gigmapr</h1>
+    <h2>Your Live Music Journey Starts Here 🎸</h2>
   </header>
   <div class="container">
         <div class="leftContainer">
           <form>
             <div class="input-container">
               <input type="text" name="artist_name" id="artist-input" placeholder= "Enter the Artist's Name!" required>
+              <button id='submit-btn' type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-            <button id='submit-btn' type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </form>
+          <p class="artist-not-found" style="display:none">Sorry, the artist searched could not be found or has no future shows available.</p>
           <ol class="concert-list" type="1">
 
           </ol>
