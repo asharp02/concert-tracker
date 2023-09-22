@@ -162,3 +162,8 @@ form{
 .venue-list-view {
     width:80%;
 }
+
+.artist-not-found {
+    text-align: center;
+    margin: 20px;
+}
