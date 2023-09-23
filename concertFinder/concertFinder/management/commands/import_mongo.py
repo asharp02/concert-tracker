@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand, CommandError, CommandParser
 from datetime import datetime, timedelta
 
 from concertFinder.mongo_setup import collection
@@ -13,23 +13,31 @@ SG_CLIENT_ID = env("SG_CLIENT_ID")
 SG_CLIENT_SECRET = env("SG_CLIENT_SECRET")
 BANDSINTOWN_APP_ID = env("BANDSINTOWN_APP_ID")
 
-SEATGEEK_API_URL = f"https://api.seatgeek.com/2/performers?client_id={SG_CLIENT_ID}&client_secret={SG_CLIENT_SECRET}&sort=score.desc&type=band&per_page=10"
+SEATGEEK_API_URL = f"https://api.seatgeek.com/2/performers?client_id={SG_CLIENT_ID}&client_secret={SG_CLIENT_SECRET}&sort=score.desc&type=band"
 BANDSINTOWN_API_URL = "https://rest.bandsintown.com/artists/"
 
 
 class Command(BaseCommand):
+    def add_arguments(self, parser: CommandParser) -> None:
+        parser.add_argument("--full-update", action="store_true")
+
     def handle(self, *args, **options):
-        seatgeek_request = requests.get(SEATGEEK_API_URL)
-        seatgeek_request.raise_for_status()
-        top_artists = handle_sg_response(seatgeek_request.json())
-        print(top_artists)
-        populate_mongo_events(top_artists)
+        full_update = options["full_update"]
+        for i in range(1, 11):
+            seatgeek_request = requests.get(f"{SEATGEEK_API_URL}&per_page=50&page={i}")
+            seatgeek_request.raise_for_status()
+            top_artists = handle_sg_response(seatgeek_request.json(), full_update)
+            print(top_artists)
+            populate_mongo_events(top_artists)
 
 
-def handle_sg_response(content):
+def handle_sg_response(content, full_update):
     artists = []
     performers = content.get("performers")
     for artist in performers:
+        name = artist["name"]
+        if not full_update and collection.find_one({"artist_name": name}):
+            continue
         artists.append(artist["name"])
     return artists
 
@@ -40,14 +48,14 @@ def populate_mongo_events(top_artists):
         bandsintown_request = requests.get(
             f"{BANDSINTOWN_API_URL}{artist}/events", params=payload
         )
-        bandsintown_request.raise_for_status()
-        events_formatted = parse_events(bandsintown_request.json())
-        if events_formatted:
-            collection.update_one(
-                {"artist_name": artist},
-                {"$set": {"events": events_formatted}},
-                upsert=True,
-            )
+        events_formatted = []
+        if bandsintown_request.ok:
+            events_formatted = parse_events(bandsintown_request.json())
+        collection.update_one(
+            {"artist_name": artist},
+            {"$set": {"events": events_formatted}},
+            upsert=True,
+        )
 
 
 def parse_events(events):
@@ -67,5 +75,4 @@ def parse_events(events):
         offers = event["offers"]
         show["url"] = offers[0].get("url") if offers else ""
         formatted_events.append(show)
-
     return formatted_events
