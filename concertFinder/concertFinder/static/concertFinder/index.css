@@ -139,7 +139,7 @@ form{
 }
 
 .concert-list {
-    overflow: scroll;
+    overflow: auto;
     display: none;
     height: 88%;
     padding: 0 5px;
