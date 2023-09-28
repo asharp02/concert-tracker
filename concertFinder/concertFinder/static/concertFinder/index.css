@@ -73,7 +73,6 @@ body {
 .leftContainer {
     max-width: 500px;
     width: 45%;
-    height: 80vh;
     background: linear-gradient(180deg, #ff9ec7 0%, #ffd7ce 53.65%);
     border-radius: 20px;
     overflow: hidden;
@@ -140,7 +139,7 @@ form{
 }
 
 .concert-list {
-    overflow-y: scroll;
+    overflow: scroll;
     display: none;
     height: 88%;
     padding: 0 5px;
@@ -181,9 +180,9 @@ form{
     }
 
     .leftContainer {
-        width: 88%;
+        width: 105%;
+        height: 85vh;
         max-width: initial;
-        margin-bottom: 25px;
     }
 
     #map {
@@ -199,6 +198,9 @@ form{
     }
     .concert-list .headliner {
         font-size: 16px;
+    }
+    .concert-list {
+        height: 75%;
     }
 
 }

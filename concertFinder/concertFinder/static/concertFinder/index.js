@@ -178,13 +178,15 @@ function populateList(events) {
   const listElement = document.querySelector(".concert-list");
   listElement.style.display = "block";
   for (const event of events) {
+    let eventDate = new Date(event.startsat.detailed);
+    let year = eventDate.getFullYear();
     const distanceNullHTML = `This event is not travellable via car from you, consider a plane ✈️`;
     const distanceFoundHTML = `Travel Time: ${event.venue.distanceReadable}`;
     let distanceHTML =
       event.venue.distance == null ? distanceNullHTML : distanceFoundHTML;
     const listItemHTML = `<li id='item-${event.id}' data-id='${event.id}' data-lat='${event.venue.latitude}' data-lng='${event.venue.longitude}'> 
             <div class='date-list-view'>
-                <p class="list-month-date">${event.startsat.month} ${event.startsat.date}</p>
+                <p class="list-month-date">${event.startsat.month} ${event.startsat.date} ${year}</p>
                 <p>${event.startsat.day} ${event.startsat.time} </p>
             </div>
             <div class="venue-list-view">

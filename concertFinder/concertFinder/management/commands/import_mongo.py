@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         full_update = options["full_update"]
-        for i in range(61, 80):
+        for i in range(101, 120):
             print(i)
             seatgeek_request = requests.get(f"{SEATGEEK_API_URL}&per_page=50&page={i}")
             seatgeek_request.raise_for_status()
