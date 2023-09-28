@@ -35,8 +35,9 @@ async function handleSubmit(event) {
   const artistNotFoundP = document.querySelector(".artist-not-found");
 
   if (content.status === 200 && content.events.length > 0) {
-    populateMap(content.events);
-    handleListView(content.events);
+    const upcomingEvents = filterCurrentEvents(content.events);
+    populateMap(upcomingEvents);
+    handleListView(upcomingEvents);
     artistNotFoundP.style.display = "none";
   } else {
     artistNotFoundP.style.display = "block";
@@ -133,6 +134,12 @@ function populateMap(shows) {
   });
 }
 
+function filterCurrentEvents(events) {
+  return events.filter((event) => {
+    return new Date(event.startsat.detailed) > Date.now();
+  });
+}
+
 /*************************************************************
  *   Display concert list + handle list item interactivity   *
  *                                                           *
@@ -140,7 +147,7 @@ function populateMap(shows) {
 
 async function handleListView(events) {
   if (userLongitude == null || userLatitude == null) {
-    console.log("Please allow location on browser");
+    alert("Please allow location on browser");
     return;
   }
   await getDistanceData(events);
