@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Comic+Neue:wght@700&family=Permanent+Marker&family=Urbanist:ital,wght@0,400;1,100&display=swap');
 
+body {
+    height: 90vh;
+}
+
 .marker {
     background-image: url("/static/concertFinder/concert.png");
     background-size: cover;
@@ -7,7 +11,7 @@
     height: 20px;
     border-radius: 50%;
     cursor: pointer;
-    }
+}
      
 .mapboxgl-popup-content {
     border-radius: 20px !important;
@@ -44,6 +48,7 @@
     justify-content: center;
     margin-top: 2rem;
     gap: 12px;
+    height: 100%;
 }
 
 header {
@@ -89,7 +94,6 @@ p {
     font-size: 20px;
     border-radius: 25px;
     border: 2px solid aquamarine;
-    width: 300px;
 }
 
 form{
@@ -166,4 +170,35 @@ form{
 .artist-not-found {
     text-align: center;
     margin: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 30px;
+    }
+
+    .leftContainer {
+        width: 88%;
+        max-width: initial;
+        margin-bottom: 25px;
+    }
+
+    #map {
+        width: 81%;
+        height: 78%;
+    }
+
+    #artist-input, #submit-btn {
+        font-size: 10px;
+    }
+    .concert-list p{
+        font-size: 12px;
+    }
+    .concert-list .headliner {
+        font-size: 16px;
+    }
+
 }

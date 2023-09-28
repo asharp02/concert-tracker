@@ -23,7 +23,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         full_update = options["full_update"]
-        for i in range(1, 11):
+        for i in range(61, 80):
+            print(i)
             seatgeek_request = requests.get(f"{SEATGEEK_API_URL}&per_page=50&page={i}")
             seatgeek_request.raise_for_status()
             top_artists = handle_sg_response(seatgeek_request.json(), full_update)
@@ -67,7 +68,7 @@ def parse_events(events):
         show["headliner"] = event["lineup"][0] if len(event["lineup"]) > 0 else ""
         show["openers"] = ", ".join(event["lineup"][1:])
         show["startsat"] = {}
-        show["startsat"]["detailed"] = date.strftime("%a %B %-d, %-I:%M %p")
+        show["startsat"]["detailed"] = date.strftime("%a %B %-d %Y, %-I:%M %p")
         show["startsat"]["day"] = date.strftime("%a")
         show["startsat"]["month"] = date.strftime("%b")
         show["startsat"]["date"] = date.strftime("%-d")
